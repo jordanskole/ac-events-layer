@@ -65,7 +65,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/ac-events-layer/dev/1492203964375-2017-04-14T21:06:04.375Z/ac-events-layer.zip"
+          "S3Key": "serverless/ac-events-layer/dev/1493385705883-2017-04-28T13:21:45.883Z/ac-events-layer.zip"
         },
         "FunctionName": "ac-events-layer-dev-catch",
         "Handler": "events.catch",
@@ -113,11 +113,11 @@
         }
       }
     },
-    "ApiGatewayMethodAcCatchGet": {
+    "ApiGatewayMethodAcCatchPost": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
         "AuthorizationType": "NONE",
-        "HttpMethod": "GET",
+        "HttpMethod": "POST",
         "MethodResponses": [
           {
             "ResponseParameters": {},
@@ -258,7 +258,7 @@
         }
       }
     },
-    "ApiGatewayDeployment1492203964385": {
+    "ApiGatewayDeployment1493385705898": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -267,7 +267,7 @@
         "StageName": "dev"
       },
       "DependsOn": [
-        "ApiGatewayMethodAcCatchGet"
+        "ApiGatewayMethodAcCatchPost"
       ]
     },
     "CatchLambdaPermissionApiGateway": {
