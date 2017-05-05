@@ -30,7 +30,7 @@
     "IamPolicyLambdaExecution": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "dev-ac-events-layer-lambda",
+        "PolicyName": "t0-ac-events-layer-lambda",
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
@@ -65,9 +65,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/ac-events-layer/dev/1493385705883-2017-04-28T13:21:45.883Z/ac-events-layer.zip"
+          "S3Key": "serverless/ac-events-layer/t0/1493926398157-2017-05-04T19:33:18.157Z/ac-events-layer.zip"
         },
-        "FunctionName": "ac-events-layer-dev-catch",
+        "FunctionName": "ac-events-layer-t0-catch",
         "Handler": "events.catch",
         "MemorySize": 1024,
         "Role": {
@@ -83,7 +83,7 @@
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-ac-events-layer"
+        "Name": "t0-ac-events-layer"
       }
     },
     "ApiGatewayResourceAcCatch": {
@@ -258,13 +258,13 @@
         }
       }
     },
-    "ApiGatewayDeployment1493385705898": {
+    "ApiGatewayDeployment1493926398176": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "t0"
       },
       "DependsOn": [
         "ApiGatewayMethodAcCatchPost"
@@ -309,7 +309,7 @@
             {
               "Ref": "ApiGatewayRestApi"
             },
-            ".execute-api.us-east-1.amazonaws.com/dev"
+            ".execute-api.us-east-1.amazonaws.com/t0"
           ]
         ]
       }

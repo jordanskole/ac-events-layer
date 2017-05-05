@@ -17,7 +17,7 @@ module.exports.catch = (event, context, callback) => {
   // I am doing switch wrong. This should drop into default probably
 
   switch (webhookBody.type) {
-    case 'subscribe':
+    // case 'subscribe':
     case 'unsubscribe':
     case 'sent':
     case 'open':
@@ -35,6 +35,16 @@ module.exports.catch = (event, context, callback) => {
         });
       break;
 
+    case 'subscribe':
+      eventList
+        .subscribe(webhookBody)
+        .then(() => {
+          console.log('Subscribe event success');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      break;
     case 'update':
       break;
     case 'deal_task_complete':
