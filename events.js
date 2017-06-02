@@ -37,7 +37,17 @@ module.exports.catch = (event, context, callback) => {
     // case 'click':
     //   break;
     
-    
+    case 'sent': 
+      eventList
+        .campaignStartsSending(webhookBody)
+        .then(() => {
+          console.log('Send event success');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      break;
+      
     case 'open':
       eventList
         .campaignOpen(webhookBody)
