@@ -55,6 +55,25 @@ exports.campaignOpen = (payload) => {
   })
 }
 
+exports.campaignClick = (payload) => {
+  let contactId = payload['contact[id]'];
+  let properties = {
+    "Campaign ID": payload['campaign[id]'],
+    "Campaign Status": payload['campaign[status]'],
+    "Campaign Name": payload['campaign[name]'],
+    "Campaign Type": payload['campaign[type]'],
+    "Campaign Subject": payload['campaign[message][subject]'],
+    "Campaign Link URL": payload['link[url]'],
+    "Campaign Link ID": payload['link[id]']    
+  }
+  
+  return amplitude.track({
+    eventType: "click",
+    userId: contactId,
+    eventProperties: properties
+  })
+}
+
 exports.subscribe = (payload) => {
   if (payload.type !== 'subscribe') {
     console.error('expected payload type subscribe, got ', payload.type);
