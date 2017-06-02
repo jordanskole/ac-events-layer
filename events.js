@@ -48,6 +48,17 @@ module.exports.catch = (event, context, callback) => {
           console.error(err);
         });
       break;
+      
+    case 'click': 
+      eventList
+        .campaignClick(webhookBody)
+        .then(() => {
+          console.log('Click event success');
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+      break;
 
     // case 'subscribe':
     //   eventList
