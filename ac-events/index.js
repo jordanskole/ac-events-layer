@@ -5,6 +5,7 @@ const AMP_API_SECRET = '1b754eb2fc4b6462a942883456c4b9b4';
 const Amplitude = require('amplitude');
 const amplitude = new Amplitude(AMP_API_KEY);
 const list = require('./lists');
+const md5 = require('md5');
 
 
 // case 'update':
@@ -36,6 +37,24 @@ exports.default = (eventName, payload) => {
   });
 }
 
+exports.campaignOpen = (payload) => {
+  
+  let contactId = payload['contact[id]'];
+  let properties = {
+    "Campaign ID": payload['campaign[id]'],
+    "Campaign Status": payload['campaign[status]'],
+    "Campaign Name": payload['campaign[name]'],
+    "Campaign Type": payload['campaign[type]'],
+    "Campaign Subject": payload['campaign[message][subject]']
+  };
+  
+  return amplitude.track({
+    eventType: "open",
+    userId: contactId,
+    eventProperties: properties
+  })
+}
+
 exports.subscribe = (payload) => {
   if (payload.type !== 'subscribe') {
     console.error('expected payload type subscribe, got ', payload.type);
@@ -58,11 +77,6 @@ exports.subscribe = (payload) => {
     userId: payload['contact[email]'],
     eventProperties: payload
   });
-
-  eventProperties: {
-    event: "subscribe",
-    
-  }
 
 }
 

@@ -16,35 +16,49 @@ module.exports.catch = (event, context, callback) => {
 
   // I am doing switch wrong. This should drop into default probably
 
-  switch (webhookBody.type) {
+  switch (webhookBody.type) {    
     // case 'subscribe':
-    case 'unsubscribe':
-    case 'sent':
+    // case 'unsubscribe':
+    // case 'sent':
+    // case 'reply':
+    // case 'forward':
+    // case 'click':
+    // case 'share': // contact added
+    //   eventList
+    //     .default(webhookBody.type, webhookBody)
+    //     .then(() => {
+    //       console.log('Event Success');
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    //   break;
+    
+    // case 'click':
+    //   break;
+    
+    
     case 'open':
-    case 'reply':
-    case 'forward':
-    case 'click':
-    case 'share': // contact added
       eventList
-        .default(webhookBody.type, webhookBody)
+        .campaignOpen(webhookBody)
         .then(() => {
-          console.log('Event Success');
+          console.log('Open event success');
         })
         .catch((err) => {
           console.error(err);
         });
       break;
 
-    case 'subscribe':
-      eventList
-        .subscribe(webhookBody)
-        .then(() => {
-          console.log('Subscribe event success');
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      break;
+    // case 'subscribe':
+    //   eventList
+    //     .subscribe(webhookBody)
+    //     .then(() => {
+    //       console.log('Subscribe event success');
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    //   break;
     case 'update':
       break;
     case 'deal_task_complete':
