@@ -39,7 +39,7 @@ exports.default = (eventName, payload) => {
 
 exports.campaignOpen = (payload) => {
   
-  let contactId = payload['contact[id]'];
+  let contactId = md5(payload['contact[email]']);
   let properties = {
     "Campaign ID": payload['campaign[id]'],
     "Campaign Status": payload['campaign[status]'],
@@ -56,7 +56,7 @@ exports.campaignOpen = (payload) => {
 }
 
 exports.campaignClick = (payload) => {
-  let contactId = payload['contact[id]'];
+  let contactId = md5(payload['contact[email]']);
   let properties = {
     "Campaign ID": payload['campaign[id]'],
     "Campaign Status": payload['campaign[status]'],
@@ -75,6 +75,9 @@ exports.campaignClick = (payload) => {
 }
 
 exports.campaignStartsSending = (payload) => {
+  
+  // this is bad! 
+  // campaign[recipients] is actually the number of receipients an email has been sent to.
   let contactId = payload['campaign[recipients]'];
   let properties = {
     "Campaign ID": payload['campaign[id]'],
