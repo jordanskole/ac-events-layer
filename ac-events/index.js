@@ -111,8 +111,8 @@ exports.subscribe = (payload) => {
   // let emailMarketingInterest = payload['contact[fields][33]'];
   // let marketingAutomationInterest = payload['contact[fields][34]'];
   // let crmInterest = payload['contact[fields][35]'];
-  console.log('creation: ', creation);
-  console.log('lastUpdated: ', lastUpdated);
+  // console.log('creation: ', creation);
+  // console.log('lastUpdated: ', lastUpdated);
   
   let eventName;
   switch (payload.list) {
