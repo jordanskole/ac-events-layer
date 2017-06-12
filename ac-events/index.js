@@ -98,24 +98,45 @@ exports.subscribe = (payload) => {
     console.error('expected payload type subscribe, got ', payload.type);
     // kill it. This isnt a subscribe event
     return;
-  }
-
+  }  
+  
+  let contactId = md5(payload['contact[email]']);
+  
+  let expires = payload['contact[fields][32]'];
+  let creation = payload['contact[fields][13]'];
+  let lastUpdated = payload['contact[fields][38]'];
+  let planId = payload['contact[fields][11]'];
+  let planTier = payload['contact[fields][30]'];
+  // let acv = payload['contact[fields][31]'];
+  // let emailMarketingInterest = payload['contact[fields][33]'];
+  // let marketingAutomationInterest = payload['contact[fields][34]'];
+  // let crmInterest = payload['contact[fields][35]'];
+  console.log('creation: ', creation);
+  console.log('lastUpdated: ', lastUpdated);
+  
   let eventName;
   switch (payload.list) {
-    case list["Users"]:
-      eventName = "New Trial Signup";
+    case "51":
+      if (creation == lastUpdated) {
+        eventName = "crm_user_creation";        
+      }
       break;
     default:
-      eventName = "New Subscriber";
+      console.log("NON TRIAL");
+      eventName = false;
       break;
   }
-
-  return amplitude.track({
-    eventType: eventName,
-    userId: payload['contact[email]'],
-    eventProperties: payload
-  });
-
+  
+  if (eventName) {
+    return amplitude.track({
+      eventType: eventName,
+      userId: contactId
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve("default event");
+    });
+  }
 }
 
 // exports.update = require('./update');

@@ -70,16 +70,16 @@ module.exports.catch = (event, context, callback) => {
         })
       break;
 
-    // case 'subscribe':
-    //   eventList
-    //     .subscribe(webhookBody)
-    //     .then(() => {
-    //       console.log('Subscribe event success');
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //     });
-    //   break;
+    case 'subscribe':
+      eventList
+        .subscribe(webhookBody)
+        .then(() => {
+          console.log('Subscribe event success');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      break;
     case 'update':
       break;
     case 'deal_task_complete':
