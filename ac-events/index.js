@@ -111,6 +111,7 @@ exports.subscribe = (payload) => {
   // let emailMarketingInterest = payload['contact[fields][33]'];
   // let marketingAutomationInterest = payload['contact[fields][34]'];
   // let crmInterest = payload['contact[fields][35]'];
+  // let signupInfo = payload['contact[fields][40]'];
   // console.log('creation: ', creation);
   // console.log('lastUpdated: ', lastUpdated);
   
@@ -138,6 +139,42 @@ exports.subscribe = (payload) => {
     });
   }
 }
+
+exports.dealTaskComplete = (payload) => {
+  if (payload.type !== 'deal_task_complete') {
+    console.error('expected payload type deal_task_complete, got ', payload.type);
+    // kill it. This isnt a subscribe event
+    return;
+  }
+  
+  
+  let contactId = md5(payload['contact[email]']);
+  let dealOwner = payload['deal[owner_firstname]'] + " " + payload['deal[owner_lastname]'];
+  let dueDate = new Date(payload['task[duedate_iso]']);
+  let doneDate = new Date(payload['task[donedate_iso]']);
+  let dateDiffMill = doneDate - dueDate;
+  let dateDiffMins = dateDiffMill / 1000 / 60;
+  
+  let properties = {
+    "Deal Owner": dealOwner,
+    "Deal Stage": payload['deal[stage_title]'],
+    "Deal Pipeline": payload['deal[pipeline_title]'],
+    "Task Type": payload['task[type_title]'],
+    "Task Title": payload['task[title]'],
+    "Task Note": payload['task[note]'],
+    "Task Due Date": dueDate,    
+    "Task Done Date": doneDate,
+    "Task Overdue Mins": dateDiffMins
+  }
+  
+  return amplitude.track({
+    eventType: "deal_task_complete",
+    userId: contactId,
+    eventProperties: properties
+  });
+  
+}
+
 
 // exports.update = require('./update');
 // exports.tagAdded = require('./contact-tag-added');

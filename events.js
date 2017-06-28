@@ -83,6 +83,14 @@ module.exports.catch = (event, context, callback) => {
     case 'update':
       break;
     case 'deal_task_complete':
+      eventList
+        .dealTaskComplete(webhookBody)
+        .then(() => {
+          console.log('Deal task complete event success');
+        })
+        .catch((err) => {
+          console.error(err);
+        })
       break;
     case 'contact_tag_added':
       break;
