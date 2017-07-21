@@ -61,14 +61,19 @@ module.exports.catch = (event, context, callback) => {
   //   "Campaign Subject": payload['campaign[message][subject]']
   // };
   
-  return amplitude.track({
+  amplitude.track({
     eventType: event.queryStringParameters['event-name'],
     userId: contactId
+  }).then(() => {
+    callback(null, response);      
+  }).catch((err) => {
+    console.log(JSON.stringify(err));
+    callback(null, response);
   });
   
   
   
-  callback(null, response);  
+  
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration
   // callback(null, { message: 'Go Serverless v1.0! Your function executed successfully!', event });
