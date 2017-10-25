@@ -57,7 +57,9 @@ module.exports.sent = (event, context, callback) => {
   amplitude.track({
     eventType: 'campaign_sent',
     userId: contactId,
-	campaign_name: event.queryStringParameters['email-name']
+    eventProperties: {
+        campaign_name: event.queryStringParameters['email-name']        
+    }
   }).then(() => {
     callback(null, response);      
   }).catch((err) => {
