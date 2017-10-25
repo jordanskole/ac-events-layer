@@ -54,6 +54,18 @@ functions:
      - http:
           path: ac/catch
           method: post
+  generic:
+    handler: generic.catch
+    events:
+      - http:
+          path: ac/automation
+          method: post
+  campaignSent:
+    handler: campaign.sent
+    events:
+      - http:
+          path: campaign/sent
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
